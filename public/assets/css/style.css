@@ -56,8 +56,8 @@ body {
   width: 100%;
 }
 .navbar .nav li {
-  display: table-cell;
-  width: 1%;
+  display: inline-table;
+  width: 15%;
   float: none;
 }
 .navbar .nav li a {
@@ -95,4 +95,12 @@ body {
   font-weight: 300;
   line-height: 1;
   letter-spacing: -1px;
+}
+.sub-heading {
+    font-weight: 600;
+    width: 100%;
+    display: inline-block;
+}
+.rule-status {
+  padding: 7px;
 }

@@ -1,0 +1,97 @@
+[
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/homepage",
+    "navtext" : "Homepage",
+    "route": "/"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/stop-smoking/c/1",
+    "navtext" : "Stop Smoking",
+    "route": "/StopSmoking"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/hayfever-allergy/c/2",
+    "navtext" : "Hayfever Allergy",
+    "route": "/HayfeverAllergy"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/cold-cough-flu/c/3",
+    "navtext" : "Cold Cough",
+    "route": "/ColdCough"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/weight-management/c/6",
+    "navtext" : "Weight Management",
+    "route": "/WeightManagement"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/shop-bundles/c/4",
+    "navtext" : "Shop Bundles",
+    "route": "/ShopBundles"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/about-us",
+    "navtext" : "About Us",
+    "route": "/AboutUs"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/customer-service",
+    "navtext" : "Customer Service",
+    "route": "/CustomerService"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/signup",
+    "navtext" : "Sign Up",
+    "route": "/SignUp"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/more-products",
+    "navtext" : "MoreProducts",
+    "route": "/MoreProducts"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/energy/c/7",
+    "navtext" : "Energy",
+    "route": "/Energy"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/delivery-and-tracking-policy",
+    "navtext" : "Delivery Policy",
+    "route": "/DeliveryPolicy"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/cookie-policy",
+    "navtext" : "Cookie Policy",
+    "route": "/CookiePolicy"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/regulatory-policy",
+    "navtext" : "Regulatory Policy",
+    "route": "/RegulatoryPolicy"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/contact-us",
+    "navtext" : "Contact Us",
+    "route": "/ContactUs"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/return-policy",
+    "navtext" : "Return Policy",
+    "route": "/ReturnPolicy"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/faqs",
+    "navtext" : "FAQS",
+    "route": "/Faqs"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/terms-and-conditions",
+    "navtext" : "Terms Conditions",
+    "route": "/TermsConditions"   
+  },
+  {
+    "url" : "http://t16471-s24810.sandbox.mozu.com/corporate-social-responsibilities",
+    "navtext" : "Corporate Responsibilities",
+    "route": "/CorporateResponsibilities"   
+  }
+]

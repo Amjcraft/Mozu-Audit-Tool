@@ -1,0 +1,19 @@
+{{#isRuleImpactfull ruleImpact}}
+  <div class="block-header">
+    <h3 class="{{rulePriority ruleImpact}}">{{localizedRuleName}}</h3>
+     <div class="summary">
+        <p>{{formatSummary summary}}</p>
+     </div>
+   </div>
+   
+      {{#each urlBlocks}}
+        <div class="block">
+           <ul class="urls">
+             {{#each urls}}
+                <li>{{formatSummary result}}</li>
+             {{/each}}
+            </ul>
+         </div> 
+      {{/each}}
+
+{{/isRuleImpactfull}}
