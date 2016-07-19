@@ -1,8 +1,8 @@
 {
-  "name": "express4-boilerplate",
-  "version": "0.1.4",
+  "name": "mozu-audit-tool",
+  "version": "0.1.0",
   "private": true,
-  "description": "Create apps and static sites with Node.js and Express 4",
+  "description": "Mozu Audit Tool",
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./bin/www",
@@ -10,44 +10,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:pinceladasdaweb/nodejs-boilerplate.git"
+    "url": "https://github.com/Amjcraft/Mozu-Audit-Tool.git"
   },
   "author": {
-    "name": "Pedro Rogério",
-    "email": "pinceladasdaweb@hotmail.com",
-    "url": "https://github.com/pinceladasdaweb"
+    "name": "Aaron Jones",
+    "email": "aaron_jones@volusion.com"
   },
-  "contributors": [
-    {
-      "name": "Pedro Rogério",
-      "email": "pinceladasdaweb@hotmail.com",
-      "url": "https://github.com/pinceladasdaweb"
-    },
-    {
-      "name": "William Bruno",
-      "email": "wbrunom@gmail.com",
-      "url": "https://github.com/wbruno"
-    },
-    {
-      "name": "Renan Martins Pimentel",
-      "email": "renan.pimentel@gmail.com",
-      "url": "https://github.com/renanmpimentel"
-    }
-  ],
   "keywords": [
-    "express4-boilerplate",
-    "boilerplate",
-    "static"
+    "Mozu"
   ],
   "license": "MIT",
   "engines": {
-    "node": "0.10.x"
+    "node": "4.0.x"
   },
   "dependencies": {
     "express": "~4.12.3",
     "compression": "~1.4.3",
     "hbs": "~4.0.0",
-    "moment": "~2.9.0"
+    "moment": "~2.9.0",
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "assemble": "~0.4.42",
