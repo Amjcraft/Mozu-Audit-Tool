@@ -32,7 +32,7 @@
     "request": "~2.73.0",
     "underscore": "~1.8.3",
     "webpagetest": "~0.3.4",
-    "mozu-node-sdk": "~2.9.0"
+    "mozu-node-sdk": "~2.9.0",
   },
   "devDependencies": {
     "assemble": "~0.4.42",
