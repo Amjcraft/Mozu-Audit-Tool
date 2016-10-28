@@ -1,26 +1,37 @@
-{{#getPageLoadData id}}
+{{#speedData}}
 <div class="row">
-	<div class="col-md-2 col-md-offset-1">
-		<div class="sub-heading">Minimum</div>
-		{{Minimum}}
+	<div class="col-md-2>
+		<div><strong>Runs: </strong></div>
+	</div>
+	<div class="col-md-2>
+		<div><strong>location: {{location}}</strong>
+	</div>
+	<div class="col-md-2>
+		<div><strong>Runs: 2</strong>
+	</div>
+	<div class="col-md-2>
+		<div><strong>Runs: 2</strong>
 	</div>
 
-	<div class="col-md-2">
-	<div class="sub-heading">Average</div>
-		{{Average}}
+</div>
+<div class="row">
+	<div class="col-md-3 col-md-offset-1">
+		<div class="sub-heading">Average</div>
+		<div><strong>First View:</strong> {{average.firstView.loadTime}}ms </div>
+		<div><strong>Repeat View:</strong> {{average.repeatView.loadTime}}ms </div>
+		
 	</div>
-	<div class="col-md-2">
-	<div class="sub-heading">Maximum</div>
-		{{Maximum}}
+
+	<div class="col-md-3">
+	<div class="sub-heading">Median</div>
+	<div><strong>First View:</strong> {{median.repeatView.loadTime}}ms </div>
+		<div><strong>Repeat View:</strong> {{median.repeatView.loadTime}}ms </div>
 	</div>
-	<div class="col-md-2">
-	<div class="sub-heading">Standard Deviation</div>
-		{{Deviation}}
-	</div>
-	<div class="col-md-2">
-	<div class="sub-heading">90th Percentile</div>
-		{{Percentille}}
+	<div class="col-md-3">
+		<div class="sub-heading">Standard Deviation</div>
+			<div><strong>First View:</strong> {{standardDeviation.firstView}}ms </div>
+			<div><strong>Repeat View:</strong> {{standardDeviation.repeatView.loadTime.loadTime}}ms </div>
 	</div>
 </div>
 
-{{/getPageLoadData}}
+{{/speedData}}

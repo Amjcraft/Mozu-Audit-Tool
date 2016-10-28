@@ -1,6 +1,7 @@
 <div class="jumbotron">
   <span class="site-title">
     {{data.title}}
+    <img src="{{data.speedData.runs.[1].firstView.pages.screenShot}}" />
   </span>
 
   <span class="site-url">
@@ -9,14 +10,15 @@
 </div>
 
 <div class="testSummary row">
- {{#data}}
+
     {{> testSummary }}
-  {{/data}}
+
 </div>
 
 
 <hr>
 <h3>Rousurce Breakdown</h3>
+
 {{#data.pageStats}}
   <div class="row">
     <div class="col-md-4">

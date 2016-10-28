@@ -6,13 +6,17 @@ var express  = require('express'),
     app      = express(),
     error    = require(__dirname + '/middleware/error');
     google    = require(__dirname + '/middleware/googleA');
-    request = require('request');
+    mozuDocs    = require(__dirname + '/middleware/mozuDocuments');
+    WebPageTest    = require(__dirname + '/middleware/webPageTestAPI');
+    request = require('request'),
+    mozuDocumentsAPI = require(__dirname + '/middleware/mozuDocuments');
     _ = require("underscore"),
     fs = require("fs");
 
 
-
+var PAGE_AUDIT_DOC_NAME = "audittoolinfo_3@a0842dd";
 var PAGE_LOADS = 'pageLoads.json';
+
 function readJsonFileSync(filepath, encoding){
 
     if (typeof (encoding) == 'undefined'){
@@ -88,14 +92,21 @@ hbs.registerHelper('rulePriority', function(rule) {
 });
 
 hbs.registerHelper('eachNav', function(options) {
-  var pages = getFile('pages.json');
-  var ret = "";
+    var ret = ""
+    var pages = getFile('pages.json');
+    var nav = [];
 
-  for(var i=0, j=pages.length; i<j; i++) {
-    ret = ret + options.fn(pages[i]);
-  }
+    if(currentSite) {
+        nav = _.where(pages, {'site': currentSite});    
+    } else {
+      nav = _.where(pages, {'id': "1"});   
+    }
 
-  return ret;
+   for(var i=0, j= nav.length; i<j; i++) {
+     ret = ret + options.fn(nav[i]);
+   }
+
+   return ret;
 });
 
 
@@ -128,19 +139,69 @@ app.use(express.static(__dirname + '/public'));
 
 var route = express.Router();
 
+
 route.get('/index.html', function(req, res){
     res.redirect(301, '/');
 });
 
-var appEndpoints = getFile('pages.json');
-appEndpoints.forEach(function(page) {
-  app.get(page.route, function(req, res) {
-    google.getAna(req, res, page.url);
-  });
+route.get('/', function(req, res) {
+        var basePath = req.baseUrl;
+        currentSite = basePath.replace(/[^a-zA-Z ]/g, "");
+
+    res.render('home', {'siteContext': {'host': req.header('host'), 'hostUrl': req.protocol + '://' + req.get('host')}, 'data': {}});
 });
 
 
+var currentSite = "";
+var appEndpoints = getFile('pages.json');
+
+appEndpoints.forEach(function(page) {
+  app.use(page.route, function(req, res) {
+      var basePath = req.baseUrl;
+      currentSite = basePath.replace(/[^a-zA-Z ]/g, "");
+        
+      google.getAna(req, res, page.url);
+
+  })
+});
+
+var mozuDocuments = mozuDocumentsAPI.mozuDocuments();
+
+var startWebPageTests = function(pagesLackingTests){
+    if(!pagesLackingTests) { pagesLackingTests = getFile('pages.json')}
+ //webPageTest.getLocations();
+    _.each(pagesLackingTests, function(value, key, list){
+        WebPageTest.api('runTest', [value.url, {location: 'Dulles', runs: '10', ignoressl: true, }, "", function(err, data){
+            mozuDocuments.createEnitityItem({
+                'entityListFullName' : 'audittoolinfo_3@a0842dd',
+                'id' : value.site + '_' + value.id ,
+                'name' : value.site + '_' + value.id,
+                'testId' : data.data.testId
+            })    
+        }], "badImp")
+    })
+}
+
+
+
+mozuDocuments.getEnitiyList().then(function(data){
+    var pages = getFile('pages.json');
+    var pagesLackingTests = _.reject(pages, function(item){ return _.findWhere(data.items, {'id': item.site + '_' + item.id})});
+    console.log(pagesLackingTests);
+    if(pagesLackingTests) {
+        startWebPageTests(pagesLackingTests);
+    }
+
+}).catch(function(error){
+    console.error(error);
+    mozuDocuments.createEnitityList(function(){
+         var pages = getFile('pages.json');
+        startWebPageTests(pagesLackingTests);
+    });
+})
+
 app.use('/', route);
+
 
 app.use(error.notFound);
 app.use(error.serverError);

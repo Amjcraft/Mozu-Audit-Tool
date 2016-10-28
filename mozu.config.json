@@ -1,0 +1,13 @@
+{
+	"appKey": "a0842dd.mozuSiteAuditTool.1.0.0.Release",
+	"sharedSecret": "cb04b1da26cc4b95ac4305e7e57dcdc9",
+	"tenant": 11004,
+	"site": 16686,
+	"master-catalog": 1,
+	"baseUrl": "https://home.mozu-qa.com",
+	"basePciUrl" : "https://payments-sb.mozu.com",
+	"developerAccountId": 1,
+	"developerAccount": { 
+		"emailAddress": "integrations@volusion.com"
+	}
+}
