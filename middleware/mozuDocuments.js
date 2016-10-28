@@ -2,7 +2,7 @@ var fs = require("fs");
 
 var apiContext = require('mozu-node-sdk/clients/platform/application')();
 var mozuEntityList = require('mozu-node-sdk/clients/platform/entityList')(apiContext);
-var mozuEntityItem = {};
+var mozuEntityItem = require('mozu-node-sdk/clients/platform/entitylists')(apiContext);
 var PAGE_AUDIT_DOC_NAME = "audittoolinfo_3@a0842dd";
 
 exports.mozuDocuments = function() {
