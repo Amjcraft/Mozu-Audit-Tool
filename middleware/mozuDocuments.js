@@ -2,14 +2,14 @@ var fs = require("fs");
 
 var apiContext = require('mozu-node-sdk/clients/platform/application')();
 var mozuEntityList = require('mozu-node-sdk/clients/platform/entityList')(apiContext);
-var mozuEntityItem = require('mozu-node-sdk/clients/platform/entityLists/entity')(apiContext);
+var mozuEntityItem = require('mozu-node-sdk/clients/platform/entityLists')(apiContext);
 var PAGE_AUDIT_DOC_NAME = "audittoolinfo_3@a0842dd";
 
 exports.mozuDocuments = function() {
 
 var createEnitityItem = function(item) {
 	item.entityListFullName = PAGE_AUDIT_DOC_NAME;
-	mozuEntityItem.insertEntity(item).then(function (data) {
+	mozuEntityItem.entity().insertEntity(item).then(function (data) {
 	    console.error('CreateEList');
 	    console.log(data);
 	}).catch(function(error) {
@@ -47,11 +47,11 @@ var createEnitityList = function(callback) {
 
 var getWebTestID = function(item) {
 	item.entityListFullName = PAGE_AUDIT_DOC_NAME;
-	return mozuEntityItem.getEntity(item);
+	return mozuEntityItem.entity().getEntity(item);
 };
 
 var getEnitiyList= function() {
-	return mozuEntityItem.getEntities({'entityListFullName' : PAGE_AUDIT_DOC_NAME});
+	return mozuEntityItem.entity().getEntities({'entityListFullName' : PAGE_AUDIT_DOC_NAME});
 };
 
 return {

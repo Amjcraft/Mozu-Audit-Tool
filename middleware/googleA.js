@@ -36,6 +36,7 @@ function getFile(file){
 
   function getWebTestData(){
     var item = _.findWhere(PAGES, {'url': url});
+
     if(item){
       mozuDocuments.getWebTestID({'id': item.site + '_' + item.id}).then(function (entityItem) {
         WebPageTest.api('getTestStatus', entityItem.testId).then(function(statusData){

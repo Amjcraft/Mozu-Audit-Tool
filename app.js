@@ -147,7 +147,9 @@ route.get('/index.html', function(req, res){
 route.get('/', function(req, res) {
         var basePath = req.baseUrl;
         currentSite = basePath.replace(/[^a-zA-Z ]/g, "");
-
+ console.log('++++');
+    console.log('Base');
+    console.log('++++');
     res.render('home', {'siteContext': {'host': req.header('host'), 'hostUrl': req.protocol + '://' + req.get('host')}, 'data': {}});
 });
 
@@ -156,10 +158,12 @@ var currentSite = "";
 var appEndpoints = getFile('pages.json');
 
 appEndpoints.forEach(function(page) {
-  app.use(page.route, function(req, res) {
-      var basePath = req.baseUrl;
-      currentSite = basePath.replace(/[^a-zA-Z ]/g, "");
-        
+  app.get(page.route, function(req, res) {
+      currentSite = page.site;  
+    console.log('=====');
+     console.log(page);
+    console.log('=====');
+
       google.getAna(req, res, page.url);
 
   })
