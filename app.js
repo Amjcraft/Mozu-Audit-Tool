@@ -4,12 +4,12 @@ var express  = require('express'),
     moment   = require('moment'),
     router   = require(__dirname + '/routes').router,
     app      = express(),
-    error    = require(__dirname + '/middleware/error');
-    google    = require(__dirname + '/middleware/googleA');
-    mozuDocs    = require(__dirname + '/middleware/mozuDocuments');
-    WebPageTest    = require(__dirname + '/middleware/webPageTestAPI');
+    error    = require(__dirname + '/middleware/error'),
+    google    = require(__dirname + '/middleware/googleA'),
+    mozuDocs    = require(__dirname + '/middleware/mozuDocuments'),
+    WebPageTest    = require(__dirname + '/middleware/webPageTestAPI'),
     request = require('request'),
-    mozuDocumentsAPI = require(__dirname + '/middleware/mozuDocuments');
+    mozuDocumentsAPI = require(__dirname + '/middleware/mozuDocuments'),
     _ = require("underscore"),
     fs = require("fs");
 
