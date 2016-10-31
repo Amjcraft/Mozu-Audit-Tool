@@ -162,7 +162,7 @@ route.get('/index.html', function(req, res){
 route.get('/', function(req, res) {
         var basePath = req.baseUrl;
         currentSite = basePath.replace(/[^a-zA-Z ]/g, "");
- console.log('++++');
+    console.log('++++');
     console.log('Base');
     console.log('++++');
     res.render('home', {'siteContext': {'host': req.header('host'), 'hostUrl': req.protocol + '://' + req.get('host')}, 'data': {}});
@@ -222,8 +222,8 @@ var checkForNewTests = function(){
     var pageList = getFile('pages.json');
     var pagesLackingTests = _.reject(pageList, function(page){ return page.hasOwnProperty('testId') });
     console.log(pagesLackingTests);
-     if(pagesLackingTests) {
-        // startWebPageTests(pagesLackingTests);
+     if(pagesLackingTests.length > 0) {
+        startWebPageTests(pagesLackingTests);
      }
 }
 
