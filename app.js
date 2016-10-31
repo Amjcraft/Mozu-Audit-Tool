@@ -1,4 +1,5 @@
 var express  = require('express'),
+    path = require('path'),
     compress = require('compression'),
     hbs      = require('hbs'),
     moment   = require('moment'),
@@ -149,8 +150,7 @@ app.use(compress({
     level: 9
 }));
 
-app.use(express.static(__dirname + '/public'));
-
+app.use("/assets", express.static(__dirname + '/public/assets'));
 
 var route = express.Router();
 
@@ -220,11 +220,10 @@ var startWebPageTests = function(pagesLackingTests){
 
 var checkForNewTests = function(){
     var pageList = getFile('pages.json');
-     console.log(pageList);
     var pagesLackingTests = _.reject(pageList, function(page){ return page.hasOwnProperty('testId') });
     console.log(pagesLackingTests);
      if(pagesLackingTests) {
-         startWebPageTests(pagesLackingTests);
+        // startWebPageTests(pagesLackingTests);
      }
 }
 
@@ -247,7 +246,7 @@ checkForNewTests();
 // })
 
 app.use('/', route);
-app.use('/assests', express.static(__dirname + '/public'));
+
 
 app.use(error.notFound);
 app.use(error.serverError);
