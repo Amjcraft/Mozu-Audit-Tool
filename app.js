@@ -6,10 +6,8 @@ var express  = require('express'),
     app      = express(),
     error    = require(__dirname + '/middleware/error'),
     google    = require(__dirname + '/middleware/googleA'),
-    mozuDocs    = require(__dirname + '/middleware/mozuDocuments'),
     WebPageTest    = require(__dirname + '/middleware/webPageTestAPI'),
     request = require('request'),
-    mozuDocumentsAPI = require(__dirname + '/middleware/mozuDocuments'),
     _ = require("underscore"),
     fs = require("fs");
 
@@ -23,15 +21,32 @@ function readJsonFileSync(filepath, encoding){
         encoding = 'utf8';
     }
     var file = fs.readFileSync(filepath, encoding);
+
     return JSON.parse(file);
+}
+
+function writeJsonFileSync(filepath, data, options){
+
+    if (typeof (options) == 'undefined'){
+        options = { encoding: 'utf8' };
+    }
+    fs.writeFileSync(filepath, data, options);
 }
 
 function getFile(file){
 
-    var filepath = __dirname + '/middleware/' + file;
-    console.log(filepath);
+    var filepath = __dirname + '/' + file;
     return readJsonFileSync(filepath);
 }
+
+function saveFile(file, jsonData){
+
+    var filepath = __dirname + '/' + file;
+    console.log('Write To...')
+    console.log(filepath);
+    return writeJsonFileSync(file, JSON.stringify(jsonData));
+}
+
 
 hbs.registerPartials(__dirname + '/views/partials');
 
@@ -169,40 +184,67 @@ appEndpoints.forEach(function(page) {
   })
 });
 
-var mozuDocuments = mozuDocumentsAPI.mozuDocuments();
+//var mozuDocuments = mozuDocumentsAPI.mozuDocuments();
 
 var startWebPageTests = function(pagesLackingTests){
-    if(!pagesLackingTests) { pagesLackingTests = getFile('pages.json')}
+    
  //webPageTest.getLocations();
+    var webPageTestsPromises = [];
+    var testList = getFile('pages.json');
+
     _.each(pagesLackingTests, function(value, key, list){
-        WebPageTest.api('runTest', [value.url, {location: 'Dulles', runs: '10', ignoressl: true, }, "", function(err, data){
-            mozuDocuments.createEnitityItem({
-                'entityListFullName' : 'audittoolinfo_3@a0842dd',
-                'id' : value.site + '_' + value.id ,
-                'name' : value.site + '_' + value.id,
-                'testId' : data.data.testId
-            })    
-        }], "badImp")
+    webPageTestsPromises.push(WebPageTest.api('runTest', value.url, {location: 'Dulles', runs: '3', ignoressl: true, }).then(function(data){
+        console.log(data);
+        if(data.data.testId) {
+            var testItem = _.findWhere(testList, {'route': value.route})
+            testItem.testId = data.data.testId;
+        }
+        // mozuDocuments.createEnitityItem({
+        //     'entityListFullName' : 'audittoolinfo_3@a0842dd',
+        //     'id' : value.site + '_' + value.id ,
+        //     'name' : value.site + '_' + value.id,
+        //     'testId' : data.data.testId
+        // })    
+        }).catch(function(err){
+            console.log('Error Running Test');
+            console.log(err);
+        })
+        );
     })
+    
+    Promise.all(webPageTestsPromises).then(values => {
+        saveFile('pages.json', testList);
+    })
+
 }
 
-
-
-mozuDocuments.getEnitiyList().then(function(data){
-    var pages = getFile('pages.json');
-    var pagesLackingTests = _.reject(pages, function(item){ return _.findWhere(data.items, {'id': item.site + '_' + item.id})});
+var checkForNewTests = function(){
+    var pageList = getFile('pages.json');
+     console.log(pageList);
+    var pagesLackingTests = _.reject(pageList, function(page){ return page.hasOwnProperty('testId') });
     console.log(pagesLackingTests);
-    if(pagesLackingTests) {
-        startWebPageTests(pagesLackingTests);
-    }
+     if(pagesLackingTests) {
+         startWebPageTests(pagesLackingTests);
+     }
+}
 
-}).catch(function(error){
-    console.error(error);
-    mozuDocuments.createEnitityList(function(){
-         var pages = getFile('pages.json');
-        startWebPageTests(pagesLackingTests);
-    });
-})
+checkForNewTests();
+
+// mozuDocuments.getEnitiyList().then(function(data){
+//     var pages = getFile('pages.json');
+//     var pagesLackingTests = _.reject(pages, function(item){ return _.findWhere(data.items, {'id': item.site + '_' + item.id})});
+//     console.log(pagesLackingTests);
+//     if(pagesLackingTests) {
+//         startWebPageTests(pagesLackingTests);
+//     }
+
+// }).catch(function(error){
+//     console.error(error);
+//     mozuDocuments.createEnitityList(function(){
+//          var pages = getFile('pages.json');
+//         startWebPageTests(pagesLackingTests);
+//     });
+// })
 
 app.use('/', route);
 
