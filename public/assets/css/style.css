@@ -104,3 +104,9 @@ body {
 .rule-status {
   padding: 7px;
 }
+.block {
+      word-break: break-all;
+}
+.block li {
+  margin: 6px 0;
+}
