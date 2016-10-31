@@ -3,6 +3,7 @@ var fs = require("fs"),
     _ = require("underscore");
 //var mozuDocumentsAPI = require(__dirname + '/mozuDocuments');
 var WebPageTest = require(__dirname + '/webPageTestAPI');
+var path = require('path'); 
 
 exports.getAna = function(req, res, url) {
 var API_URL = 'https://www.googleapis.com/pagespeedonline/v2/runPagespeed';
@@ -35,6 +36,22 @@ function getFile(file){
     return readJsonFileSync(filepath);
 }
 
+function writeJsonFileSync(filepath, data, options){
+
+    if (typeof (options) == 'undefined'){
+        options = { encoding: 'utf8' };
+    }
+    fs.writeFileSync(filepath, data, options);
+}
+
+function saveFile(file, jsonData){
+
+    var filepath = __dirname + '/' + file;
+    console.log('Write To...')
+    console.log(filepath);
+    return writeJsonFileSync(file, JSON.stringify(jsonData));
+}
+
 // function getWebTestData(){
 //     var item = _.findWhere(PAGES, {'url': url});
 
@@ -53,18 +70,39 @@ function getFile(file){
         
 //     })
 //  }
-//  }   
+//  }
+
+
 
 function getWebTestData(){
   console.log('GetData');
     var item = _.findWhere(PAGES, {'url': url});
     if(item){
-      WebPageTest.api('getTestStatus', item.testId).then(function(statusData){
-        dataPromises.push(WebPageTest.api('getTestResults', statusData.data.testId, {requests: false}));
-        renderUI();
-      }).catch(function(err){
-        renderUI();
-      })
+      if (fs.existsSync(item.site + '_' + item.id + '.json')) {
+        console.log('exisits')
+          var promise = new Promise(
+            function(resolve, reject) {
+                var file = getFile(item.site + '_' + item.id + '.json');
+                if(file) {
+                  resolve(file);
+                  return
+                }
+                reject(err);
+           })
+          dataPromises.push(promise);
+          renderUI();
+          
+      } else {
+        console.log('nope')
+        WebPageTest.api('getTestStatus', item.testId).then(function(statusData){
+          dataPromises.push(WebPageTest.api('getTestResults', statusData.data.testId, {requests: false, pagespeed: false,  domains: false, breakdown:false }));
+          renderUI();
+        }).catch(function(err){
+          renderUI();
+        })
+
+      }
+
     }
  }
 
@@ -87,8 +125,15 @@ function renderUI(){
     var basePath = req.baseUrl;
     var currentSite = basePath.replace(/[^a-zA-Z ]/g, ""),
     googleData = JSON.parse(values[0]),
+    speedData = values[1];
+    var item = _.findWhere(PAGES, {'url': url});
 
-    speedData = values[1].data;
+    if(speedData.data) {
+      console.log('Save')
+      saveFile(item.site + '_' + item.id + '.json', speedData.data);
+      speedData = values[1].data;
+    }
+    
     if(!speedData) {
       speedData = {'testingCompelte': false, 'loadingStatus': 'Web Page Testing In Progess'};
       

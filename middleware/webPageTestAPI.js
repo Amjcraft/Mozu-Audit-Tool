@@ -9,8 +9,10 @@ exports.api = function apiInterface(apiCall, apiParams, apiOptions, callback) {
   return new Promise(
       function(resolve, reject) {
          api[apiCall].call(api, apiParams, apiOptions, function(err, data){
-          if(err) 
+          if(err) { 
             reject(err);
+            console.log(err)
+            }
 
           resolve(data);
          })
