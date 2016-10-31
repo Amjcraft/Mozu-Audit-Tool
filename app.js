@@ -247,7 +247,7 @@ checkForNewTests();
 // })
 
 app.use('/', route);
-
+app.use('/assests', express.static(__dirname + '/public'));
 
 app.use(error.notFound);
 app.use(error.serverError);
