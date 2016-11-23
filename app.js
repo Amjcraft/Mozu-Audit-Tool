@@ -193,7 +193,7 @@ var startWebPageTests = function(pagesLackingTests){
     var testList = getFile('pages.json');
 
     _.each(pagesLackingTests, function(value, key, list){
-    webPageTestsPromises.push(WebPageTest.api('runTest', value.url, {location: 'Dulles', runs: '3', ignoressl: true, }).then(function(data){
+    webPageTestsPromises.push(WebPageTest.api('runTest', value.url, {location: 'Dulles', runs: '5', ignoressl: true, }).then(function(data){
         console.log(data);
         if(data.data.testId) {
             var testItem = _.findWhere(testList, {'route': value.route})
