@@ -15,22 +15,6 @@ var express  = require('express'),
 
 var PAGE_AUDIT_DOC_NAME = "audittoolinfo_3@a0842dd";
 var PAGE_LOADS = 'pageLoads.json';
-var MongoClient = require('mongodb').MongoClient,
-test = require('assert');
-
-MongoClient.connect('mongodb://localhost:27017/test', function (err, db) {
-  if (err) throw err
-
-  var col = db.collection('listCollectionsExample1');
-  // Insert a bunch of documents
-
-    col.find().toArray(function(err, docs) {
-       if (err) throw err
-
-       console.log(docs) ;
-      db.close();
-    });
-})
 
 function readJsonFileSync(filepath, encoding){
 
