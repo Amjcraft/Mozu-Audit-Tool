@@ -7,6 +7,16 @@ var PAGE_AUDIT_DOC_NAME = "audittoolinfo_3@a0842dd";
 
 exports.mozuDocuments = function() {
 
+
+var getWebTestID = function(item) {
+	item.entityListFullName = PAGE_AUDIT_DOC_NAME;
+	return mozuEntityItem.entity().getEntity(item);
+};
+
+var getEnitiyList= function() {
+	return mozuEntityItem.entity().getEntities({'entityListFullName' : PAGE_AUDIT_DOC_NAME});
+};
+
 var createEnitityItem = function(item) {
 	item.entityListFullName = PAGE_AUDIT_DOC_NAME;
 	mozuEntityItem.entity().insertEntity(item).then(function (data) {
@@ -45,14 +55,6 @@ var createEnitityList = function(callback) {
 	})
 };
 
-var getWebTestID = function(item) {
-	item.entityListFullName = PAGE_AUDIT_DOC_NAME;
-	return mozuEntityItem.entity().getEntity(item);
-};
-
-var getEnitiyList= function() {
-	return mozuEntityItem.entity().getEntities({'entityListFullName' : PAGE_AUDIT_DOC_NAME});
-};
 
 return {
 	createEnitityList: function(callback) {
